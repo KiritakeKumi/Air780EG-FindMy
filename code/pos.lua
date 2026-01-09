@@ -1,4 +1,4 @@
---[[
+﻿--[[
     Aprs4G by BG2LBF - GPS定位数据
 ]]
 local MIN_COURSE = 20			-- 最小航向为20
@@ -303,6 +303,26 @@ sys.taskInit(function()
         sys.wait(30000)
     end
 end)
+-- GPS长时间未固定时触发一次基站定位
+sys.taskInit(function()
+    sys.waitUntil("CFGFINISH")
+    local lastFix = os.time()
+    while true do
+        if libgnss.isFix() then
+            lastFix = os.time()
+        else
+            if os.time() - lastFix > 60 then
+                log.info("GPS_FALLBACK", "trigger LBS because GPS not fixed")
+                sys.publish("LOC_LBS")
+                sys.publish("POS_STATE_INITLBS")
+                sys.publish("SEND_LOC_LBS_NOW")
+                lastFix = os.time()
+            end
+        end
+        sys.wait(30000)
+    end
+end)
+
 sys.subscribe("GNSS_STATE", function(event, ticks)
     -- event取值有
     -- FIXED 定位成功
@@ -342,3 +362,4 @@ end)
 sys.subscribe("SEND_APRS_NOW_GPS", function()
     sendAprsNow = true
 end)
+
