@@ -1,29 +1,28 @@
 --[[
-    Aprs4G by BG2LBF - 参数配置
+    参数配置-部分无效参数在当前版本中已经不可用
 ]]
 local isDebug = false
 DEV_TYPE = "air780eg"                   -- 定义当前要安装的设备型号（主要是区分不同主板的引脚定义，自制主板请修改对应引脚），目前已知支持 air780e/air780eg/air700/air780eg-yed
-AUDIO_VOICE_PROMPT_LEN = 0              -- 语音提示音频种类数量
--- MQTT相关信息暂不提供web配置
+AUDIO_VOICE_PROMPT_LEN = 0              --  //无效参数
+--  //无效参数
 MQTT_HOST = ""
 MQTT_PORT = 1000
 MQTT_SSL = false
 MQTT_USERNAME = ""
 MQTT_PASSWORD = ""
--- 百度坐标转换AK，暂不提供web配置
 BD_GEOCONV = ""
 
 aprscfg = {
-    ["CALLSIGN"] = "AAAAAA",            -- 呼号
-    ["PASSCODE"] = 16815,               -- ARPS验证码
-    ["SSID"] = "1",                     -- SSID，1-2个数字或字母。默认值 1
-    ["SERVER"] = "niconiconi.us",             -- APRS服务器地址，域名或IP地址都可以。默认值 aprs.tv
-    ["PORT"] = 14580,                   -- APRS服务器端口号，范围 1024-49151。默认值  14580
-    ["TABLE"] = "/",                    -- 台站图标TABLE。默认值 /
-    ["SYMBOL"] = ">",                   -- 台站图标SYMBOL。默认值 >
-    ["BEACON"] = "ping",     -- 信标状态文本，最长62个字符。
-    ["BEACON_INTERVAL"] = 60,           -- 信标发送间隔，单位秒，范围 10 - 1*60*60 ，设置为 0 时关闭信标发送功能。默认值 60
-    ["BEACON_STATUS_INTERVAL"] = 600,   -- 信标状态发送间隔，单位秒   60 - 24*60*60 ，设置为 0 时关闭信标状态发送功能。默认值 600
+    ["CALLSIGN"] = "AAAAAA",            --  //无效参数
+    ["PASSCODE"] = 16815,               --  //无效参数
+    ["SSID"] = "1",                     --  //无效参数
+    ["SERVER"] = "niconiconi.us",       --  //无效参数
+    ["PORT"] = 14580,                   --  //无效参数
+    ["TABLE"] = "/",                    --  //无效参数
+    ["SYMBOL"] = ">",                   --  //无效参数
+    ["BEACON"] = "ping",     --  //无效参数
+    ["BEACON_INTERVAL"] = 60,           --  //无效参数
+    ["BEACON_STATUS_INTERVAL"] = 600,   --  //无效参数
     ["TRACKERMODE"] = 1,                -- Tracker工作模式：1表示移动台站、2表示指定坐标的固定台站（需要指定坐标）
     ["FIXLOC_LAT"] = 4311.1,            -- 固定台站指定坐标 纬度 默认值 4319.8 ddmm.mmmm 格式
     ["FIXLOC_LNG"] = 12533.3,           -- 固定台站指定坐标 经度 默认值 12533.0 ddmm.mmmm 格式
@@ -37,25 +36,25 @@ aprscfg = {
     ["DISPLAY_VER"] = 1,                -- 是否显示版本号 默认1：显示， 0：不显示
     ["BEACON_TEXT"] = "imei:*${imei} rssi:${rssi} sat:${satuse}/${sattotal} temp:${temp} vol:${vol} mileage:${totalm}km",     -- 信标文本，最长200个字符。
     ["AGNSS_ENABLE"] = 0,               -- 是否使用agnss,可以提高定位速度，但是需要消耗一些网络流量  默认0：关闭   ， 1：开启
-    ["AUDIO_ENABLE"] = 0,               -- 是否使用语音喇叭   默认0：关闭   ， 1：开启
-    ["AUDIO_VOL"] = 10,                 -- 是语音喇叭的音量   默认10     允许 1-30 之间 ，数值越大  音量越大
-    ["AUDIO_VOICE_PROMPT"] = "11111111",-- 每一个语音提示是否播放的开关，1为播放 0为不播放 ，顺序为 开机音频/关机音频/发射音频/讲话开始提示音频/讲话结束提示音频/定位成功音频/定位丢失音频/电量低音频  默认11111111
+    ["AUDIO_ENABLE"] = 0,               --  //无效参数
+    ["AUDIO_VOL"] = 10,                 --  //无效参数
+    ["AUDIO_VOICE_PROMPT"] = "11111111",--  //无效参数
     ["POWER_SAVE_MODE"] = 0,            -- 是否启用省电模式   默认0：关闭， 1：静止省电， 2：定时省电， 3：静止关机
     ["POWER_SAVE_MODE_TIME"] = 600,     -- 静止省电模式下静止多久进入省电模式，单位秒。默认值600   60（一分钟）-  3600（1小时）
     ["POWER_SAVE_MODE_D1TIME"] = 300,   -- 定时省电模式下间隔多久定时关机,每次启动时间，默认300秒，单位秒。60（1分钟） -  86400（1天）
     ["POWER_SAVE_MODE_D2TIME"] = 3600,  -- 定时省电模式下间隔多久定时启动,每次休眠时间，默认值3600（一小时）单位秒。   1800（30分钟） -  604800（7天）
-    ["SMS_CAT_ENABLE"] = 0,             -- 短信猫（短信转发，EC618不支持电信卡收发短信） 默认0：关闭， 1：开启-转发到手机（存在短信费） 2：开启-转发到平台（免费）3：开启-转发到APRS网络（免费，5字段特定文本，识别不到将转发到平台）4：开启-转发到APRS网络（免费，2字段特定文本，识别不到将转发到平台）
-    ["SMS_CAT_MOBILE"] = "10086",       -- 短信猫 转发目标手机号码 
+    ["SMS_CAT_ENABLE"] = 0,             --  //无效参数
+    ["SMS_CAT_MOBILE"] = "10086",       --  //无效参数 
     ["TOTAL_MILEAGE"] = 0.0,            -- 总里程公里数 默认：0.0 （公里）
     ["TOTAL_MILEAGE_AUTOCLEAR"] = 0,    -- 总里程公里数手动关机自动清零 默认：0：不清零    1：自动清零
-    ["SHICI_TYPE"] = "all",             -- 使用诗词API的主题类型   默认all  ,变量为 ${shici_content}${shici_title}${shici_author}
-    ["TALK_MODE"] = 0,                  -- 是否使用网络对讲模式   默认0：关闭   ， 1：开启
+    ["SHICI_TYPE"] = "all",             --  //无效参数
+    ["TALK_MODE"] = 0,                  --  //无效参数
     ["TALK_CHANNEL"] = "public",        -- 使用网络对讲模式时的频道名称   默认public
     ["BTN_MODE"] = 1,                   -- 按钮模式   默认1：信标自主发射   ， 2：重复最后一次对讲语音 
     ["PLAT_SENDSELF"] = 1,              -- 上传平台时是否上传自身位置  0表示不上传  1表示上传  默认值 1
     ["POWER_RESTART_TIME"] = 24,         -- 自动重启时间间隔，单位小时。默认值0 （不自动重启）   例如：24 表示开机24小时后自动重启
     ["COORD_ENC"] = 0,                  -- 上传的坐标是否使用BD09坐标系。 默认：0：不加密    1：加密成BD09坐标系
-    ["PWK_MODE"] = 1                    -- 按钮长按开机。 默认：1：长按开机    0：短按开机
+    ["PWK_MODE"] = 1                    --  //无效参数
 }
 -- 计算验证码
 local function pwdCal(callin)
