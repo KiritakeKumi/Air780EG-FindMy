@@ -1,4 +1,4 @@
---[[
+﻿--[[
     Aprs4G by BG2LBF - 混合定位管理
 ]]
 local use_gps_time = 0
@@ -41,6 +41,7 @@ sys.taskInit(function()
                 sys.publish("POS_STATE_INITGPS")
             end
             use_gps_time = os.time()
+            log.info("MIX_DEBUG","start with GPS", use_gps_time)
             GPS_FIXED = false
         elseif use_lbs_time == 0 and use_gps_time ~= 0 then
             -- GPS中
@@ -51,6 +52,7 @@ sys.taskInit(function()
                 sys.publish("LOC_LBS")
                 sys.publish("POS_STATE_INITLBS")
                 use_lbs_time = os.time()
+                log.info("MIX_DEBUG","switch to LBS", use_lbs_time)
                 use_gps_time = 0
             end
         elseif use_lbs_time ~= 0 and use_gps_time == 0 then

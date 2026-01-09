@@ -41,9 +41,7 @@ local function singletimCerCb()
             -- 固定台
             sys.publish("SEND_APRS_NOW_FIXED")
         end
-        sys.publish("AUDIO_SEND_APRS")
     elseif aprscfg.BTN_MODE == 2 then
-        sys.publish("AUDIO_ONLINE_MSG")
     end
 end
 --进入静止休眠
@@ -108,9 +106,6 @@ local function initPWKCtl()
                     -- 双击
                     sys.timerStop(singleCb_id)
                     log.info("lastPressKey", "双击")
-                    if aprscfg.TALK_MODE == 1 then
-                        sys.publish("AUDIO_TALK_START")
-                    end
                     return
                 end
                 lastPressKey = os.time()
@@ -167,7 +162,6 @@ sys.taskInit(function()
             if BATTERY_CHARGING == 1 and BATTERY_SOC >= 100 then
                 log.info("BATTERY_CHARGING", "已充满")
             elseif BATTERY_CHARGING == 0 and BATTERY_SOC == 5 then
-                sys.publish("AUDIO_POWER_LOW")
             end
 			sys.waitUntil("POWER_OFF_VOICE", 360000)
 		end
@@ -175,7 +169,6 @@ sys.taskInit(function()
         initPWKCtl()
         while true do
 			if isPowOff then
-                sys.publish("AUDIO_POWER_OFF")
                 sys.wait(3000)
                 powOffCb()
             end
@@ -186,7 +179,6 @@ sys.taskInit(function()
             if BATTERY_CHARGING == 1 and BATTERY_SOC >= 100 then
                 log.info("BATTERY_CHARGING", "已充满")
             elseif BATTERY_CHARGING == 0 and BATTERY_SOC == 5 then
-                sys.publish("AUDIO_POWER_LOW")
             end
 			sys.waitUntil("POWER_OFF_VOICE", 360000)
 		end
@@ -194,7 +186,6 @@ sys.taskInit(function()
 		initPWKCtl()
         while true do
 			if isPowOff then
-                sys.publish("AUDIO_POWER_OFF")
                 sys.wait(3000)
                 powOffCb()
             end
@@ -205,7 +196,6 @@ sys.taskInit(function()
             if BATTERY_CHARGING == 1 and BATTERY_SOC >= 100 then
                 log.info("BATTERY_CHARGING", "已充满")
             elseif BATTERY_CHARGING == 2 and BATTERY_SOC == 5 then
-                sys.publish("AUDIO_POWER_LOW")
             end
 			sys.waitUntil("POWER_OFF_VOICE", 360000)
 		end

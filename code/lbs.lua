@@ -1,4 +1,4 @@
---[[
+﻿--[[
     Aprs4G by BG2LBF - 基站数据
 ]]
 local lbsLoc2 = require("lbsLoc2")
@@ -18,6 +18,7 @@ local function duToGpsDM(duStr)
         end
         return string.format("%.2f", result)
     else
+            log.warn("LBS_DEBUG", "no fix", os.time())
         return "0"
     end
 end
@@ -28,6 +29,7 @@ local function lbsProcess()
         sys.waitUntil("CELL_INFO_UPDATE", 30000)
         local lat, lng, t = lbsLoc2.request(5000)
         if lat then
+            log.info("LBS_DEBUG", "fixed", lat, lng, os.time(), json.encode(t or {}))
             
             log.info("UTC时间戳", os.time())
             local gpsData = {}
@@ -49,6 +51,7 @@ local function lbsProcess()
                 sys.publish("LOC_LBS_FIXED")
             end
         else
+            log.warn("LBS_DEBUG", "no fix", os.time())
             if aprscfg.LOCMODE ~= 3 then
                 sys.publish("LOC_LBS_LOSE")
             end

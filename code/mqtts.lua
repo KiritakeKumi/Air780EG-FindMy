@@ -17,7 +17,6 @@ local mqttc = nil
 function download_msg_callback(content_len, body_len)
     if content_len == body_len then
         log.info("download_msg_callback", "已下载完成")
-        sys.publish("AUDIO_ONLINE_MSG")
     end
 end
 -- 下载语音消息

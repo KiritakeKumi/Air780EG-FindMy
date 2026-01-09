@@ -313,11 +313,9 @@ sys.subscribe("GNSS_STATE", function(event, ticks)
         -- 定位成功
         GPS_FIXED = true
         sys.publish("LOC_GPS_FIXED")
-        sys.publish("AUDIO_GPS_PIN")
     else
         GPS_FIXED = false
         sys.publish("LOC_GPS_LOSE")
-        sys.publish("AUDIO_GPS_UNPIN")
     end
 end)
 
