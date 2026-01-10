@@ -1,11 +1,44 @@
 ﻿--[[
-    Aprs4G by BG2LBF - GPS定位数据
+
+end)
+
+-- GPS长时间未固定时，优先触发一次 AGNSS，然后切基站
+sys.taskInit(function()
+    sys.waitUntil("CFGFINISH")
+    local lastFix = os.time()
+    local agnssTried = false
+    while true do
+        if libgnss.isFix() then
+            lastFix = os.time()
+            agnssTried = false
+        else
+            local diff = os.time() - lastFix
+            if aprscfg.AGNSS_ENABLE == 1 and diff > 60 and not agnssTried then
+                log.info("GPS_FALLBACK", "run AGNSS because GPS not fixed >60s")
+                exec_agnss()
+                agnssTried = true
+            end
+            if diff > 60 then
+                log.info("GPS_FALLBACK", "trigger LBS because GPS not fixed")
+                sys.publish("LOC_LBS")
+                sys.publish("POS_STATE_INITLBS")
+                sys.publish("SEND_LOC_LBS_NOW")
+                lastFix = os.time()
+                agnssTried = false
+            end
+        end
+        sys.wait(1000)
+    end
+end)
+
+--[[
+    GPS定位数据
 ]]
 local MIN_COURSE = 20			-- 最小航向为20
 local MIN_RUNSPD = 3			-- 最小行驶速度为3
-local MIN_INTERVAL = 15		    -- 最小间隔为15s
-local MAX_INTERVAL = 60		    -- 最大间隔为60s
-local STOP_INTERVAL = 60		-- 静止间隔为60s
+local MIN_INTERVAL = 2		    -- 最小间隔
+local MAX_INTERVAL = 10		    -- 最大间隔
+local STOP_INTERVAL = 10		-- 静止间隔
 
 local gps_uart_id = 2
 local gpsDataOld
@@ -151,14 +184,14 @@ local function courseDiff(new, old)
     return diff
 end
 
--- GPS数据读取封装
+-- GPS数据获取 预设为1s 较为激进但获取数据稳定
 local function gpsProcess()
     if not gpsEnable then
-        sys.wait(10000)
+        sys.wait(1000)
         return
     end
     if not libgnss.isFix() then
-        sys.wait(10000)
+        sys.wait(1000)
         return
     else
 
@@ -252,11 +285,11 @@ sys.taskInit(function()
     elseif aprscfg.TRAVEL_MODE == 1 then
         MIN_RUNSPD = 1
     end
-
+    -- edit
     beaconstatusinterval = aprscfg.BEACON_STATUS_INTERVAL
-    MAX_INTERVAL = aprscfg.BEACON_INTERVAL
+    MAX_INTERVAL = 1
     maxDecayTimes = aprscfg.MAX_DECAY
-    STOP_INTERVAL = MAX_INTERVAL
+    STOP_INTERVAL = 1
     -- 初始化衰减算法
     decayFunc = calcDecay(STOP_INTERVAL)
 
@@ -300,7 +333,7 @@ sys.taskInit(function()
         else
             log.info("GPS_DEBUG", "not fixed")
         end
-        sys.wait(30000)
+        sys.wait(1000)
     end
 end)
 -- GPS长时间未固定时触发一次基站定位
@@ -319,7 +352,7 @@ sys.taskInit(function()
                 lastFix = os.time()
             end
         end
-        sys.wait(30000)
+        sys.wait(1000)
     end
 end)
 
@@ -362,4 +395,7 @@ end)
 sys.subscribe("SEND_APRS_NOW_GPS", function()
     sendAprsNow = true
 end)
+
+
+
 
